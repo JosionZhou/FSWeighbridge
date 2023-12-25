@@ -1,0 +1,2 @@
+<web-view src="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd67d894b7f5f9ef7&redirect_uri=https://www.sl56.com/WeChatAuth/OAuth7&response_type=code&scope=snsapi_base&state=5#wechat_redirect">
+</web-view>
