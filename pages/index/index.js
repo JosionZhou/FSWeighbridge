@@ -11,8 +11,26 @@ Component({
     hasUserInfo: false,
     canIUseGetUserProfile: wx.canIUse('getUserProfile'),
     canIUseNicknameComp: wx.canIUse('input.type.nickname'),
+    isPaySuccess:false
   },
   methods: {
+    onLoad(option) {
+      console.log("onLoad_Option,",option);
+    },
+    // onShow(option) {
+    //   let main = this;
+    //   const eventChannel = this.getOpenerEventChannel();
+    //   console.log("indexEventChannel:",eventChannel);
+    //   if (eventChannel != null) {
+    //     eventChannel.on("checkPaySuccess", res => {
+    //       //如果检测到在支付页面里面已经完成支付，则当前界面刷新；如若未支付成功，则保留支付界面，客户可能需要重新发起支付
+    //       if (res) {
+    //         console("接收页面。收到结果.",res);
+    //         main.onLoad();
+    //       }
+    //     });
+    //   }
+    // },
     // 事件处理函数
     bindViewTap() {
       wx.navigateTo({
@@ -20,8 +38,12 @@ Component({
       })
     },
     onChooseAvatar(e) {
-      const { avatarUrl } = e.detail
-      const { nickName } = this.data.userInfo
+      const {
+        avatarUrl
+      } = e.detail
+      const {
+        nickName
+      } = this.data.userInfo
       this.setData({
         "userInfo.avatarUrl": avatarUrl,
         hasUserInfo: nickName && avatarUrl && avatarUrl !== defaultAvatarUrl,
@@ -29,7 +51,9 @@ Component({
     },
     onInputChange(e) {
       const nickName = e.detail.value
-      const { avatarUrl } = this.data.userInfo
+      const {
+        avatarUrl
+      } = this.data.userInfo
       this.setData({
         "userInfo.nickName": nickName,
         hasUserInfo: nickName && avatarUrl && avatarUrl !== defaultAvatarUrl,
@@ -49,4 +73,5 @@ Component({
       })
     },
   },
+
 })
