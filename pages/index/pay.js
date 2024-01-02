@@ -121,7 +121,7 @@ Page({
       success: function (res) {
         console.log("wxPaymentParams:", res);
         let wxPaymentParams = JSON.parse(res.Data);
-        wxPaymentParams.success = function (res) {
+        wxPaymentParams.success = function(res) {
           wx.hideLoading();
           wx.showToast({
             title: '支付成功',
@@ -129,10 +129,17 @@ Page({
           });
           main.getBillFile(reqData.ObjectId);
         }
-        wxPaymentParams.fail = function (err) {
+        wxPaymentParams.fail = function(err) {
           wx.hideLoading();
           console.log(err);
-          main.getBillFile(reqData.ObjectId);
+          wx.showModal({
+            title: '支付失败',
+            content: "请重新支付",
+            showCancel:false,
+            complete:function(res){
+              wx.navigateBack();
+            }
+          });
         }
         wx.requestPayment(wxPaymentParams);
       },
