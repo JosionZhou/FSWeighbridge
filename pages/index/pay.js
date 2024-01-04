@@ -13,8 +13,7 @@ Page({
    */
   data: {
     openId: null,
-    billImagePath: '',
-    isPaySuccess: false
+    billImagePath: ''
   },
 
   /**
@@ -85,12 +84,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    //如果已支付完成，点击左上角返回时，直接回到称重首页
-    if (this.data.isPaySuccess) {
-      wx.redirectTo({
-        url: '/pages/index/index'
-      });
-    }
   },
 
   /**
@@ -173,18 +166,8 @@ Page({
           if(res){
             clearInterval(checkBillFile);
             wx.hideLoading();
-            wx.downloadFile({
-              url: ServerAddress + '/Measure/GetWeightBillFile?objectId=' + objectId,
-              success: function (res) {
-                if (res.statusCode == 200) {
-                  console.log("billTempPath:", res.tempFilePath);
-                  main.setData({
-                    billImagePath: res.tempFilePath,
-                    isPaySuccess: true
-                  });
-                }
-              }
-            });
+            //检测到支付完成并且磅单已生成后，直接返回H5页面，H5页面会自动跳转到磅单页面
+            wx.navigateBack();
           }
         },
         fail:function(err){
